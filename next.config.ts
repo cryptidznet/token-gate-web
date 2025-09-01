@@ -27,10 +27,11 @@ const connectSrc = Array.from(
 
 const cspHeader = `
   default-src 'self';
-  script-src 'self'${isDev ? " 'unsafe-eval' 'unsafe-inline'" : ''};
-  style-src 'self'${isDev ? " 'unsafe-inline'" : ''};
+  script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''};
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;
   img-src 'self' blob: data:;
-  font-src 'self';
+  font-src 'self' https://fonts.gstatic.com data:;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
