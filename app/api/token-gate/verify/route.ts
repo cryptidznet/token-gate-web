@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
             headers: { 'Content-Type': 'application/json' },
         });
     } catch (error) {
-        return NextResponse.json({ success: false, message: 'Proxy error' }, { status: 500 });
+        return NextResponse.json(error, { status: 500 });
     }
 }
 
