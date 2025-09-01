@@ -6,13 +6,13 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { PublicKey } from "@solana/web3.js";
 import { Wallet, Loader2, AlertCircle, LogOut } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const { publicKey, signMessage, connected, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
   const searchParams = useSearchParams();
   const [sessionToken, setSessionToken] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,9 +20,7 @@ export default function Home() {
   // Extract and validate sessionToken
   useEffect(() => {
     const token = searchParams.get("session-token");
-    if (!token || token.length < 10) {
-      setError("Invalid or missing session token. Please use the link from Telegram.");
-    } else {
+    if (token && token.length >= 10) {
       setSessionToken(token);
     }
     setIsLoading(false);
@@ -48,12 +46,11 @@ export default function Home() {
 
   const handleVerify = async () => {
     if (!publicKey || !sessionToken || !signMessage) {
-      setError("Wallet not connected or signing not supported.");
+      toast.error("Wallet not connected or signing not supported.");
       return;
     }
 
     setLoading(true);
-    setError(null);
 
     try {
       new PublicKey(publicKey.toBase58());
@@ -78,11 +75,11 @@ export default function Home() {
       if (data.success) {
         setSuccess(true);
       } else {
-        setError(data.message || "Verification failed.");
+        toast.error(data.message || "Verification failed.");
       }
     } catch (err) {
       console.error("Verification error:", err);
-      setError("An error occurred during verification. Please try again.");
+      toast.error("An error occurred during verification. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -115,12 +112,6 @@ export default function Home() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="p-8 bg-white rounded-lg shadow-md max-w-md w-full">
         <h1 className="text-2xl font-bold mb-6 text-center">Cryptidz Wallet Verification</h1>
-
-        {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
-            {error}
-          </div>
-        )}
 
         {success ? (
           <div className="text-center">

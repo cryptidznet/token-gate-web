@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { WalletAdapterProvider } from "@/components/WalletAdapterProvider";
+import { ToasterProvider } from "@/components/ToasterProvider";
 import "./globals.css";
 import "@solana/wallet-adapter-react-ui/styles.css";
 
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <WalletAdapterProvider>{children}</WalletAdapterProvider>
+        <WalletAdapterProvider>
+          {children}
+          <ToasterProvider />
+        </WalletAdapterProvider>
       </body>
     </html>
   );
