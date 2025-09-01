@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
@@ -8,23 +8,14 @@ import { PublicKey } from "@solana/web3.js";
 import { Wallet, Loader2, AlertCircle, LogOut } from "lucide-react";
 import { toast } from "react-toastify";
 
-export default function Home() {
+function HomeContent() {
   const { publicKey, signMessage, connected, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
   const searchParams = useSearchParams();
-  const [sessionToken, setSessionToken] = useState<string | null>(null);
+  const sessionTokenParam = searchParams.get("session-token");
+  const sessionToken = sessionTokenParam && sessionTokenParam.length >= 10 ? sessionTokenParam : null;
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Extract and validate sessionToken
-  useEffect(() => {
-    const token = searchParams.get("session-token");
-    if (token && token.length >= 10) {
-      setSessionToken(token);
-    }
-    setIsLoading(false);
-  }, [searchParams]);
 
   // Auto-disconnect on success 
   useEffect(() => {
@@ -84,18 +75,6 @@ export default function Home() {
       setLoading(false);
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="p-8 bg-white rounded-lg shadow-md max-w-md w-full text-center">
-          <Loader2 className="mx-auto mb-4 animate-spin text-blue-500" size={48} />
-          <p className="text-lg font-semibold text-black">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
   if (!sessionToken) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -154,5 +133,22 @@ export default function Home() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+          <div className="p-8 bg-white rounded-lg shadow-md max-w-md w-full text-center">
+            <Loader2 className="mx-auto mb-4 animate-spin text-blue-500" size={48} />
+            <p className="text-lg font-semibold text-black">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }
