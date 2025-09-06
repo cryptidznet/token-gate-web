@@ -10,7 +10,7 @@ function generateSignature(payload: string): string {
 
 function generateToken(): string {
     const timestamp = Date.now();
-    const payload = `BOTS:${timestamp}`;
+    const payload = `GATE:${timestamp}`;
     const signature = generateSignature(payload);
     return `${payload}:${signature}`;
 }

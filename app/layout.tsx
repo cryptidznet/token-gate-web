@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { WalletAdapterProvider } from "@/components/WalletAdapterProvider";
 import { ToasterProvider } from "@/components/ToasterProvider";
 import "./globals.css";
 import "@solana/wallet-adapter-react-ui/styles.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { body, heading, dialogue } from "@/app/fonts/fonts";
 
 export const metadata: Metadata = {
   title: "Cryptidz Wallet Verifier",
@@ -19,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={dialogue.variable + " " + body.variable + " " + heading.variable}>
         <WalletAdapterProvider>
           {children}
           <ToasterProvider />

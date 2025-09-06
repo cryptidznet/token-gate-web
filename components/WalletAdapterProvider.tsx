@@ -1,10 +1,41 @@
 "use client";
 
-import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import { ConnectionProvider, WalletProvider, useWallet } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-import { LedgerWalletAdapter, PhantomWalletAdapter, SolflareWalletAdapter, TorusWalletAdapter } from "@solana/wallet-adapter-wallets";
-import { useMemo } from "react";
+import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
+import { useEffect, useMemo } from "react";
 import { env } from "@/env";
+
+function WalletEventBridge() {
+    const { connected, publicKey, wallet } = useWallet();
+
+    useEffect(() => {
+        try {
+            if (connected) {
+                window.dispatchEvent(
+                    new CustomEvent("wallet-adapter-connected", {
+                        detail: {
+                            walletName: wallet?.adapter?.name,
+                            publicKey: publicKey?.toBase58?.(),
+                        },
+                    })
+                );
+            } else {
+                window.dispatchEvent(
+                    new CustomEvent("wallet-adapter-disconnected", {
+                        detail: {
+                            walletName: wallet?.adapter?.name,
+                        },
+                    })
+                );
+            }
+        } catch (_) {
+            // no-op
+        }
+    }, [connected, publicKey, wallet]);
+
+    return null;
+}
 
 export function WalletAdapterProvider({ children }: { children: React.ReactNode }) {
     const endpoint = env.NEXT_PUBLIC_SOLANA_RPC_URL || "https://api.mainnet-beta.solana.com";
@@ -13,16 +44,31 @@ export function WalletAdapterProvider({ children }: { children: React.ReactNode 
         () => [
             new PhantomWalletAdapter(),
             new SolflareWalletAdapter(),
-            new LedgerWalletAdapter(),
-            new TorusWalletAdapter(),
         ],
         []
     );
 
     return (
         <ConnectionProvider endpoint={endpoint}>
-            <WalletProvider wallets={wallets} autoConnect>
-                <WalletModalProvider>{children}</WalletModalProvider>
+            <WalletProvider
+                wallets={wallets}
+                autoConnect
+                onError={(error) => {
+                    try {
+                        window.dispatchEvent(
+                            new CustomEvent("wallet-adapter-error", {
+                                detail: { name: error?.name, message: error?.message },
+                            })
+                        );
+                    } catch (_) {
+                        // no-op
+                    }
+                }}
+            >
+                <WalletModalProvider>
+                    <WalletEventBridge />
+                    {children}
+                </WalletModalProvider>
             </WalletProvider>
         </ConnectionProvider>
     );

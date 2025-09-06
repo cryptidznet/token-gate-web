@@ -1,80 +1,30 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
+import Image from "next/image";
+import { Loader2, AlertCircle } from "lucide-react";
+import { DialogueBox } from "@/components/DialogueBox";
+import { CtaBox } from "@/components/CtaBox";
+import { useTokenGateFlow } from "./features/token-gate/useTokenGateFlow";
 import { useSearchParams } from "next/navigation";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { PublicKey } from "@solana/web3.js";
-import { Wallet, Loader2, AlertCircle, LogOut } from "lucide-react";
-import { toast } from "react-toastify";
 
 function HomeContent() {
-  const { publicKey, signMessage, connected, disconnect } = useWallet();
-  const { setVisible } = useWalletModal();
+  const {
+    uiMode,
+    segments,
+    ctaOptions,
+    showCta,
+    characterImage,
+    loading,
+    publicKey,
+    onSelectCta,
+    onDialogueDone,
+  } = useTokenGateFlow();
+
   const searchParams = useSearchParams();
   const sessionTokenParam = searchParams.get("session-token");
   const sessionToken = sessionTokenParam && sessionTokenParam.length >= 10 ? sessionTokenParam : null;
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
-  // Auto-disconnect on success 
-  useEffect(() => {
-    if (success && connected) {
-      const timeout = setTimeout(() => {
-        disconnect();
-      }, 1000); // 1s delay to show success UI
-      return () => clearTimeout(timeout);
-    }
-  }, [success, connected, disconnect]);
-
-  const handleWalletAction = () => {
-    if (connected) {
-      disconnect();
-    } else {
-      setVisible(true);
-    }
-  };
-
-  const handleVerify = async () => {
-    if (!publicKey || !sessionToken || !signMessage) {
-      toast.error("Wallet not connected or signing not supported.");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      new PublicKey(publicKey.toBase58());
-
-      const message = new TextEncoder().encode(`Verify Cryptidz ownership for session ${sessionToken}`);
-      const signature = await signMessage(message);
-
-      const response = await fetch(`/api/token-gate/verify`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          walletAddress: publicKey.toBase58(),
-          sessionToken,
-          signature: Array.from(signature),
-          message: Array.from(message),
-        }),
-      });
-
-      if (!response.ok) throw new Error("Verification failed on server.");
-
-      const data = await response.json();
-      if (data.success) {
-        setSuccess(true);
-      } else {
-        toast.error(data.message || "Verification failed.");
-      }
-    } catch (err) {
-      console.error("Verification error:", err);
-      toast.error("An error occurred during verification. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
   if (!sessionToken) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -88,49 +38,31 @@ function HomeContent() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="p-8 bg-white rounded-lg shadow-md max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-6 text-center">Cryptidz Wallet Verification</h1>
+    <div className="min-h-screen w-full flex items-stretch justify-center bg-black">
+      <div className="relative w-full flex-1 overflow-x-hidden">
+        <picture className="absolute inset-0">
+          <source media="(min-width: 768px)" srcSet="/img_horn_pub.jpg" />
+          <Image src="/img_horn_pub_portrait.jpg" alt="Horn Pub" fill priority className="object-cover object-center blur-[2px]" />
+        </picture>
+        <div className="tg-crt" />
+        <div className="relative z-10 flex flex-col justify-end min-h-screen px-4 py-4">
+          <div className="w-full flex-1" />
 
-        {success ? (
-          <div className="text-center">
-            <p className="text-green-600 font-semibold mb-4">Verification successful! Check Telegram for your invite link.</p>
-            <button
-              onClick={() => window.location.href = "https://t.me/CryptidzTokenGateBot"}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Back to Telegram
-            </button>
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-28 sm:bottom-40 md:bottom-0 w-full z-10 pointer-events-none flex items-end justify-center">
+            <div className="relative w-full aspect-square max-w-[360px] xs:max-w-[440px] sm:max-w-[720px] md:max-w-[960px] lg:max-w-[1240px]">
+              <Image src={characterImage} alt="Character" fill priority quality={100} className="object-contain object-bottom" />
+            </div>
           </div>
-        ) : (
-          <>
-            <button
-              onClick={handleWalletAction}
-              disabled={loading}
-              className="w-full mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50 flex items-center justify-center"
-            >
-              {connected ? <LogOut className="mr-2" size={20} /> : <Wallet className="mr-2" size={20} />}
-              {connected ? "Disconnect" : "Connect Wallet"}
-            </button>
 
-            {connected && (
-              <>
-                <div className="mb-4 p-3 bg-gray-100 rounded">
-                  <p className="text-sm truncate">Connected: {publicKey?.toBase58()}</p>
-                </div>
-
-                <button
-                  onClick={handleVerify}
-                  disabled={loading}
-                  className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50 flex items-center justify-center"
-                >
-                  {loading ? <Loader2 className="animate-spin mr-2" size={20} /> : null}
-                  {loading ? "Verifying..." : "Verify Ownership"}
-                </button>
-              </>
-            )}
-          </>
-        )}
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[92%] z-20 flex flex-col items-center pb-4 sm:pb-16">
+            <div className="w-full max-w-[720px] flex flex-col items-stretch gap-3 sm:gap-6">
+              {showCta ? <CtaBox options={ctaOptions} onSelect={onSelectCta} className="w-auto inline-flex self-end md:translate-x-1/2" /> : null}
+              <div className="w-full tg-dialogue">
+                <DialogueBox segments={segments} onAllSegmentsDone={onDialogueDone} label="Sol D Groger" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
