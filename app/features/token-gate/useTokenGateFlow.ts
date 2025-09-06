@@ -12,7 +12,6 @@ import { mapVerifyError } from "./errorMap";
 import {
   VerifyFailureObject,
   isServiceResponse,
-  TokenGateWalletModel,
   TokenGateVerifySuccessSchema,
   parseServiceResponseSuccess,
 } from "./types";
@@ -61,7 +60,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
       const errorName = (anyEvt?.detail?.name || "").toString();
 
       let copy = "Hmmm... that doesn't look right. Wanna try again, matey?";
-      let ctas = [
+      const ctas = [
         { id: "connect", label: "Connect Wallet" },
         { id: "back", label: "Back to Telegram" },
       ];
@@ -79,7 +78,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
       setErrorFlow([copy], ctas, { recoverOnConnect: false });
     }
     window.addEventListener("wallet-adapter-error", onWalletError as EventListener);
-    function onWalletConnected(e: Event) {
+    function onWalletConnected(e: Event) { // eslint-disable-line @typescript-eslint/no-unused-vars
       if (uiModeRef.current !== "verifying" && uiModeRef.current !== "success" && uiModeRef.current !== "rules") {
         setConnectedFlow();
       }
@@ -166,26 +165,24 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
       const raw = await response.json().catch(() => ({}));
       const successParsed = parseServiceResponseSuccess(raw, TokenGateVerifySuccessSchema);
       if (successParsed.success) {
-        const parsed = successParsed.data.responseObject as { tokenGateWallet?: TokenGateWalletModel; inviteLink?: string };
-        const { tokenGateWallet, inviteLink } = parsed;
+        const parsed = successParsed.data.responseObject as { inviteLink?: string };
+        const { inviteLink } = parsed;
         setInviteUrl(typeof inviteLink === "string" ? inviteLink : null);
-        const tier = tokenGateWallet?.tier as string | undefined;
-        setRulesFlow(typeof tier === "string" ? tier : undefined);
+        setRulesFlow();
       } else {
-        if (isServiceResponse<any>(raw)) {
+        if (isServiceResponse<Record<string, unknown>>(raw)) {
           const mapped = mapVerifyError(raw as ServiceResponse<VerifyFailureObject>);
           setErrorFlow(mapped.messageSegments, mapped.ctas, { recoverOnConnect: false }, mapped.overrideCharacterImage);
         } else {
-          const msg = typeof (raw as any)?.message === "string" ? (raw as any).message : "Verification failed.";
           setErrorFlow(["Arrr... Let's try that again, matey. Not to worry, me apologies for the inconvenience."], undefined, { recoverOnConnect: false });
         }
       }
-    } catch (err) {
+    } catch (err) { // eslint-disable-line @typescript-eslint/no-unused-vars
       setErrorFlow(["Hmmmm... something ain't right. Let's try again, matey."], undefined, undefined, "/img_drunk_monster_verifying.webp");
     }
   }
 
-  function setRulesFlow(tier?: string) {
+  function setRulesFlow() {
     setUiMode("rules");
     setCharacterImage("/img_drunk_monster_default.webp");
     setSegments([

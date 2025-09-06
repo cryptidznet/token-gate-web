@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { AlertCircle } from "lucide-react";
 import { DialogueBox } from "@/components/DialogueBox";
 import { CtaBox } from "@/components/CtaBox";
 import { useTokenGateFlow } from "../../app/features/token-gate/useTokenGateFlow";

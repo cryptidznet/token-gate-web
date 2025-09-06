@@ -24,7 +24,7 @@ export async function GET(_req: NextRequest, { params }: { params: { sessionToke
       status: res.status,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (error) {
+  } catch (error) { // eslint-disable-line @typescript-eslint/no-unused-vars
     return NextResponse.json({ success: false, message: 'Internal server error', statusCode: 500 }, { status: 500 });
   }
 }

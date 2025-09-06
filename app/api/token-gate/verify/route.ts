@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
             status: res.status,
             headers: { 'Content-Type': 'application/json' },
         });
-    } catch (error) {
+    } catch (error) { // eslint-disable-line @typescript-eslint/no-unused-vars
         return NextResponse.json({
             success: false,
             message: 'Internal server error',

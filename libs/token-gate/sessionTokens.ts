@@ -24,7 +24,7 @@ export async function validateSessionToken(sessionToken: string): Promise<boolea
     const data: unknown = await res.json().catch(() => undefined);
 
     if (isServiceResponse<Record<string, unknown>>(data)) {
-      const sr = data as ServiceResponse<any>;
+      const sr = data as ServiceResponse<Record<string, unknown>>;
       if (sr.success) {
         return true;
       }
@@ -32,7 +32,7 @@ export async function validateSessionToken(sessionToken: string): Promise<boolea
     }
 
     return false;
-  } catch (err) {
+  } catch (err) { // eslint-disable-line @typescript-eslint/no-unused-vars
     return false;
   }
 }

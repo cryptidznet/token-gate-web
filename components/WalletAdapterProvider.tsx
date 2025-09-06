@@ -29,7 +29,7 @@ function WalletEventBridge() {
                     })
                 );
             }
-        } catch (_) {
+        } catch (_) { // eslint-disable-line @typescript-eslint/no-unused-vars
             // no-op
         }
     }, [connected, publicKey, wallet]);
@@ -60,7 +60,7 @@ export function WalletAdapterProvider({ children }: { children: React.ReactNode 
                                 detail: { name: error?.name, message: error?.message },
                             })
                         );
-                    } catch (_) {
+                    } catch (_) { // eslint-disable-line @typescript-eslint/no-unused-vars
                         // no-op
                     }
                 }}

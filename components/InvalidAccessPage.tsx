@@ -20,7 +20,7 @@ export default function InvalidAccessPage() {
         </div>
 
         <p className="font-heading text-cryptidz-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase mb-2 leading-normal md:leading-10 relative -top-6 sm:-top-10 md:-top-12">
-          Hmm... yer not supposed to be here, MATEY. <br /> Head to the pub and we'll get ye sorted proper.
+          Hmm... yer not supposed to be here, MATEY. <br /> Head to the pub and we&apos;ll get ye sorted proper.
         </p>
 
         <PrimaryButton onClick={() => {
