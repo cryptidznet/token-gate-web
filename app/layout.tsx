@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={dialogue.variable + " " + body.variable + " " + heading.variable}>
+      <body className={`${dialogue.variable} ${body.variable} ${heading.variable}`}>
         <WalletAdapterProvider>
           <HeaderControls />
           {children}
