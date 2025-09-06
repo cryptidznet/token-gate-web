@@ -21,12 +21,14 @@ import { env } from "@/env";
 
 export type UiMode = "idle" | "connected" | "verifying" | "rules" | "success" | "error";
 
-export function useTokenGateFlow() {
+export function useTokenGateFlow(passedSessionToken?: string | null) {
   const { publicKey, signMessage, connected, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
   const searchParams = useSearchParams();
-  const sessionTokenParam = searchParams.get("session-token");
-  const sessionToken = sessionTokenParam && sessionTokenParam.length >= 10 ? sessionTokenParam : null;
+  const sessionTokenFromUrl = searchParams.get("session-token");
+  const sessionToken = (typeof passedSessionToken === "string" && passedSessionToken.length >= 10)
+    ? passedSessionToken
+    : (sessionTokenFromUrl && sessionTokenFromUrl.length >= 10 ? sessionTokenFromUrl : null);
 
   const [uiMode, setUiMode] = useState<UiMode>("idle");
   const [segments, setSegments] = useState<DialogueSegment[]>([]);
@@ -176,7 +178,7 @@ export function useTokenGateFlow() {
         }
       }
     } catch (err) {
-      setErrorFlow(["Hmmmm... something ain't right. Let's try again, matey."]);
+      setErrorFlow(["Hmmmm... something ain't right. Let's try again, matey."], undefined, undefined, "/img_drunk_monster_verifying.webp");
     } finally {
       setLoading(false);
     }
