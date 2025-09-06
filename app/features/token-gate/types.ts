@@ -34,7 +34,7 @@ export function isServiceResponse<T extends object>(value: unknown): value is Se
   );
 }
 
-export type TokenGateTier = "purple" | "gold" | string;
+export type TokenGateTier = "purple" | "gold";
 export type TokenGateWalletModel = {
   _id: string;
   userId: string;
