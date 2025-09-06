@@ -8,6 +8,15 @@ export type TokenGateErrorCode =
   | "INTERNAL_SERVER_ERROR"
   | string;
 
+export const TokenGateErrorCodeSchema = z.union([
+  z.literal("INVALID_SESSION_TOKEN"),
+  z.literal("INVALID_SIGNATURE"),
+  z.literal("USER_NOT_FOUND"),
+  z.literal("INSUFFICIENT_BALANCE"),
+  z.literal("INTERNAL_SERVER_ERROR"),
+  z.string(),
+]);
+
 export type VerifyFailureObject = {
   errorCode: TokenGateErrorCode;
   currentBalance?: number;
@@ -70,7 +79,7 @@ export const TokenGateVerifySuccessSchema = z.object({
 });
 
 export const VerifyFailureObjectSchema = z.object({
-  errorCode: z.string(),
+  errorCode: TokenGateErrorCodeSchema,
   currentBalance: z.number().optional(),
   requiredBalancePurple: z.number().optional(),
   requiredBalanceGold: z.number().optional(),

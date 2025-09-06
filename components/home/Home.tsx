@@ -23,7 +23,6 @@ export default function HomeContent({ sessionToken }: { sessionToken: string | n
           alt=""
           aria-hidden
           fill
-          priority
           sizes="(min-width: 768px) 100vw"
           className="hidden md:block object-cover object-center blur-[2px]"
         />
@@ -32,7 +31,6 @@ export default function HomeContent({ sessionToken }: { sessionToken: string | n
           alt=""
           aria-hidden
           fill
-          priority
           sizes="100vw"
           className="block md:hidden object-cover object-center blur-[2px]"
         />
@@ -42,7 +40,7 @@ export default function HomeContent({ sessionToken }: { sessionToken: string | n
 
           <div className="absolute left-1/2 -translate-x-1/2 bottom-28 sm:bottom-40 md:bottom-0 w-full z-10 pointer-events-none flex items-end justify-center">
             <div className="relative w-full aspect-square max-w-[360px] xs:max-w-[440px] sm:max-w-[720px] md:max-w-[960px] lg:max-w-[1240px]">
-              <Image src={characterImage} alt="Character" fill priority quality={100} className="object-contain object-bottom" />
+              <Image src={characterImage} alt="Character" fill quality={100} className="object-contain object-bottom" />
             </div>
           </div>
 
