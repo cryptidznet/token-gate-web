@@ -22,7 +22,11 @@ export async function POST(req: NextRequest) {
             headers: { 'Content-Type': 'application/json' },
         });
     } catch (error) {
-        return NextResponse.json(error, { status: 500 });
+        return NextResponse.json({
+            success: false,
+            message: 'Internal server error',
+            statusCode: 500,
+        }, { status: 500 });
     }
 }
 
