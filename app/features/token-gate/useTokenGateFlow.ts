@@ -273,7 +273,11 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     }
     if (id === "open_invite") {
       if (inviteUrl) {
-        window.location.href = inviteUrl;
+        try {
+          await disconnect();
+        } finally {
+          window.location.href = inviteUrl;
+        }
       }
       return;
     }
