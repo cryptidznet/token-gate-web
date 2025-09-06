@@ -116,7 +116,7 @@ export function DialogueBox({ segments, typingSpeedMs = 20, onAllSegmentsDone, c
         {canAdvance ? (
           <button
             type="button"
-            onClick={skipOrAdvance}
+            onClick={(e) => { e.stopPropagation(); skipOrAdvance(); }}
             className="absolute bottom-2 right-2 h-6 w-6 md:h-8 md:w-8 flex items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-95"
             aria-label="Next"
           >
