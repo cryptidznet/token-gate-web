@@ -51,6 +51,10 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: cspHeader.replace(/\n/g, '').replace(/\s{2,}/g, ' ').trim(), // Flatten and trim
           },
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noimageindex, noarchive, nosnippet, notranslate',
+          },
         ],
       },
     ];
