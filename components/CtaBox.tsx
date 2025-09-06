@@ -98,7 +98,6 @@ export function CtaBox({ options, onSelect, className }: CtaBoxProps) {
                 "relative w-full h-12 rounded-md transition text-black text-base sm:text-lg md:text-xl lg:text-[24px] font-dialogue outline-none focus:outline-none text-left px-3 whitespace-nowrap cursor-pointer " +
                 (isActive ? "bg-cryptidz-soft-lavender" : "bg-transparent hover:bg-cryptidz-soft-lavender")
               }
-              aria-selected={isActive}
             >
               {opt.label}
             </button>

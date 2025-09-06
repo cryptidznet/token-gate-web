@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type DialogueSegment = string | { text: string; italic?: boolean; bold?: boolean };
 
@@ -20,7 +20,7 @@ export function DialogueBox({ segments, typingSpeedMs = 20, onAllSegmentsDone, c
   const [segmentIndex, setSegmentIndex] = useState(0);
   const [visibleText, setVisibleText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
-  const current = normalizedSegments[segmentIndex] ?? { text: "" };
+  const current = useMemo(() => normalizedSegments[segmentIndex] ?? { text: "" }, [normalizedSegments, segmentIndex]);
   const timerRef = useRef<number | null>(null);
 
   // Reset typing when segments change identity
@@ -75,7 +75,7 @@ export function DialogueBox({ segments, typingSpeedMs = 20, onAllSegmentsDone, c
   const isLastSegment = segmentIndex >= normalizedSegments.length - 1;
   const canAdvance = !isTyping && !isLastSegment;
 
-  const skipOrAdvance = () => {
+  const skipOrAdvance = useCallback(() => {
     if (isTyping) {
       setVisibleText(current.text);
       setIsTyping(false);
@@ -87,7 +87,7 @@ export function DialogueBox({ segments, typingSpeedMs = 20, onAllSegmentsDone, c
       setVisibleText("");
       setIsTyping(true);
     }
-  };
+  }, [isTyping, current.text, canAdvance, segmentIndex, normalizedSegments.length]);
 
   // Allow pressing Enter to advance when the chevron is visible
   useEffect(() => {
