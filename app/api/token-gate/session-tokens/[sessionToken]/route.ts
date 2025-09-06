@@ -10,7 +10,7 @@ export async function GET(_req: NextRequest, { params }: { params: { sessionToke
     }
 
     const token = generateToken();
-    const res = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/token-gate/session-tokens/${sessionToken}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/token-gate/session-tokens//${encodeURIComponent(sessionToken)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
