@@ -24,11 +24,16 @@ export function DialogueBox({ segments, typingSpeedMs = 20, onAllSegmentsDone, c
   const timerRef = useRef<number | null>(null);
 
   // Reset typing when segments change identity
+  const segmentsSig = useMemo(
+    () => normalizedSegments.map((s) => `${s.text}|${s.italic ? 'i' : ''}${s.bold ? 'b' : ''}`).join("|__|"),
+    [normalizedSegments]
+  );
+
   useEffect(() => {
     setSegmentIndex(0);
     setVisibleText("");
     setIsTyping(true);
-  }, [normalizedSegments.map((s) => `${s.text}|${s.italic ? 'i' : ''}${s.bold ? 'b' : ''}`).join("|__|")]);
+  }, [segmentsSig]);
 
   // Type effect
   useEffect(() => {
