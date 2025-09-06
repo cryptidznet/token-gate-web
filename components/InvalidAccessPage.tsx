@@ -15,7 +15,7 @@ export default function InvalidAccessPage() {
             height={500}
             quality={100}
             priority={true}
-            className="w-64 h-64 sm:w-96 sm:h-96 md:w-[480px] md:h-[480px] lg:w-[560px] lg:h-[560px] object-contain"
+            className="w-64 h-64 xs:w-72 xs:h-72 sm:w-96 sm:h-96 md:w-[480px] md:h-[480px] lg:w-[560px] lg:h-[560px] object-contain"
           />
         </div>
 
