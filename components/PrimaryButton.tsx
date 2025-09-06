@@ -29,6 +29,7 @@ const PrimaryButton = ({
 
   return (
     <button
+      type="button"
       onClick={onClick}
       disabled={disabled}
       className={`
