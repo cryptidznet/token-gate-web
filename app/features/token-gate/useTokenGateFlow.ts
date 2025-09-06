@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
@@ -40,6 +40,8 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
   const [recoverOnConnect, setRecoverOnConnect] = useState<boolean>(false);
   const [hasDisconnectedOnce, setHasDisconnectedOnce] = useState(false);
   const [inviteUrl, setInviteUrl] = useState<string | null>(null);
+  const uiModeRef = useRef<UiMode>("idle");
+  useEffect(() => { uiModeRef.current = uiMode; }, [uiMode]);
 
   const telegramUrl = useMemo(() => "https://t.me/CryptidzTokenGateBot", []);
 
@@ -79,8 +81,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     }
     window.addEventListener("wallet-adapter-error", onWalletError as EventListener);
     function onWalletConnected(e: Event) {
-      const anyEvt = e as CustomEvent<{ walletName?: string; publicKey?: string }>;
-      if (uiMode !== "verifying" && uiMode !== "success" && uiMode !== "rules") {
+      if (uiModeRef.current !== "verifying" && uiModeRef.current !== "success" && uiModeRef.current !== "rules") {
         setConnectedFlow();
       }
     }
