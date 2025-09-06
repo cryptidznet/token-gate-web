@@ -26,7 +26,7 @@ export function mapVerifyError(
       return {
         messageSegments: [
           "Hmmm... Something smells fishy here. And trust me, that's not a compliment.",
-          { text: "For security, your session has expired. Please return to Telegram and type /verify to get a fresh verification link.", italic: true } as MessageSegment
+          { text: "For security, your session has expired. Please return to Telegram and type /verify to get a fresh verification link.", italic: true }
         ],
         ctas: [{ id: "back", label: "Back to Telegram" }],
         overrideCharacterImage: "/img_drunk_monster_verifying.webp",
@@ -35,7 +35,7 @@ export function mapVerifyError(
       return {
         messageSegments: [
           "Arr... Me spyglass is having trouble verifying yer Cryptidz holdings. Wanna try that again, matey? Me apologies for the inconvenience.",
-          { text: "This means your wallet signature couldn't be validated. Please try connecting and signing again.", italic: true } as MessageSegment
+          { text: "This means your wallet signature couldn't be validated. Please try connecting and signing again.", italic: true }
         ],
         ctas: [
           { id: "verify", label: "Try Again" },
@@ -46,8 +46,8 @@ export function mapVerifyError(
       return {
         messageSegments: [
           "Hmmmm... I spent me entire life explorin' the 207 seas, and trust me I know a fish when I see one.",
-          { text: "This means you have not been verified yet. Please return to Telegram and complete the captcha verification first.", italic: true } as MessageSegment,
-          { text: "If you think this is an error, please contact support instead.", italic: true } as MessageSegment
+          { text: "This means you have not been verified yet. Please return to Telegram and complete the captcha verification first.", italic: true },
+          { text: "If you think this is an error, please contact support instead.", italic: true }
         ],
         ctas: [{ id: "captcha", label: "Complete Captcha" }, { id: "contact_support", label: "Contact Support" }],
         overrideCharacterImage: "/img_drunk_monster_verifying.webp",
@@ -63,10 +63,10 @@ export function mapVerifyError(
         segments.push({
           text: `You currently have ${current} $CRYPTIDZ. You need at least ${needPurple} for Purple tier${typeof needGold !== "undefined" ? ` or ${needGold} for Gold tier` : ""}.`,
           italic: true,
-        } as MessageSegment);
+        });
         segments.push("Make sure to top up yer balance. I'll be waiting right here when ye are ready, matey.");
       } else {
-        segments.push({ text: message, italic: true } as MessageSegment);
+        segments.push({ text: message, italic: true });
       }
 
       return {
