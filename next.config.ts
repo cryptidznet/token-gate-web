@@ -40,6 +40,7 @@ const connectSrc = Array.from(
       solanaRpcWsOrigin,
       isDev ? 'http://localhost:3002' : '',
       isDev ? 'ws://localhost:3002' : '',
+      isDev ? 'ws://localhost:3000' : '',
     ].filter(Boolean)
   )
 ).join(' ');

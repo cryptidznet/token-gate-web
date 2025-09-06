@@ -18,10 +18,24 @@ export default function HomeContent({ sessionToken }: { sessionToken: string | n
   return (
     <div className="min-h-screen w-full flex items-stretch justify-center bg-black">
       <div className="relative w-full flex-1 overflow-x-hidden">
-        <picture className="absolute inset-0">
-          <source media="(min-width: 768px)" srcSet="/img_horn_pub.jpg" />
-          <Image src="/img_horn_pub_portrait.jpg" alt="Horn Pub" fill priority className="object-cover object-center blur-[2px]" />
-        </picture>
+        <Image
+          src="/img_horn_pub.jpg"
+          alt=""
+          aria-hidden
+          fill
+          priority
+          sizes="(min-width: 768px) 100vw"
+          className="hidden md:block object-cover object-center blur-[2px]"
+        />
+        <Image
+          src="/img_horn_pub_portrait.jpg"
+          alt=""
+          aria-hidden
+          fill
+          priority
+          sizes="100vw"
+          className="block md:hidden object-cover object-center blur-[2px]"
+        />
         <div className="tg-crt" />
         <div className="relative z-10 flex flex-col justify-end min-h-screen px-4 py-4">
           <div className="w-full flex-1" />
