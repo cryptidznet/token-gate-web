@@ -1,5 +1,6 @@
 import { CtaOption } from "@/components/CtaBox";
-import { ServiceResponse, VerifyFailureObject } from "./types";
+import { VerifyFailureObject } from "./types";
+import { ServiceResponse } from "@/common";
 
 type MessageSegment = string | { text: string; italic?: boolean };
 

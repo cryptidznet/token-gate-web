@@ -1,3 +1,4 @@
+import { ServiceResponse } from "@/common";
 import { z } from "zod";
 export type TokenGateErrorCode =
   | "INVALID_SESSION_TOKEN"
@@ -12,13 +13,6 @@ export type VerifyFailureObject = {
   currentBalance?: number;
   requiredBalancePurple?: number;
   requiredBalanceGold?: number;
-};
-
-export type ServiceResponse<T = unknown> = {
-  success: boolean;
-  message: string;
-  responseObject?: T;
-  statusCode: number;
 };
 
 export function isServiceResponse<T extends object>(value: unknown): value is ServiceResponse<T> {

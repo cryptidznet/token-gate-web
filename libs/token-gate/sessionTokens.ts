@@ -1,4 +1,5 @@
-import { isServiceResponse, ServiceResponse } from "@/app/features/token-gate/types";
+import { isServiceResponse } from "@/app/features/token-gate/types";
+import { ServiceResponse } from "@/common";
 import { env } from "@/env";
 import { generateToken } from "@/libs/authenticate";
 
