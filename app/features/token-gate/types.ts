@@ -51,9 +51,22 @@ export const TokenGateWalletSchema = z
   })
   .passthrough();
 
+const TelegramInviteLinkSchema = z.string().url().refine((value) => {
+  try {
+    const url = new URL(value);
+    const host = url.hostname.toLowerCase();
+    if (!['t.me', 'telegram.me', 'tg.me'].includes(host)) return false;
+    const path = url.pathname;
+    // Accept t.me/+<code> or t.me/joinchat/<code>
+    return (/^\/\+[A-Za-z0-9_-]+$/.test(path) || /^\/joinchat\/[A-Za-z0-9_-]+$/.test(path));
+  } catch {
+    return false;
+  }
+}, { message: 'Invalid Telegram invite link' });
+
 export const TokenGateVerifySuccessSchema = z.object({
   tokenGateWallet: TokenGateWalletSchema,
-  inviteLink: z.string().url(),
+  inviteLink: TelegramInviteLinkSchema,
 });
 
 export const VerifyFailureObjectSchema = z.object({
