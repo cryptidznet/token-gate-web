@@ -6,7 +6,7 @@ export async function GET(_req: NextRequest, { params }: { params: { sessionToke
   try {
     const { sessionToken } = params;
     if (!sessionToken || sessionToken.length < 10) {
-      return NextResponse.json({ success: false, message: 'Invalid session token' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'Invalid session token', statusCode: 400 }, { status: 400 });
     }
 
     const token = generateToken();
@@ -25,7 +25,7 @@ export async function GET(_req: NextRequest, { params }: { params: { sessionToke
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    return NextResponse.json(error, { status: 500 });
+    return NextResponse.json({ success: false, message: 'Internal server error', statusCode: 500 }, { status: 500 });
   }
 }
 
