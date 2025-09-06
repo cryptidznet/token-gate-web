@@ -40,6 +40,8 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
   const [inviteUrl, setInviteUrl] = useState<string | null>(null);
   const uiModeRef = useRef<UiMode>("idle");
   useEffect(() => { uiModeRef.current = uiMode; }, [uiMode]);
+  const recoverOnConnectRef = useRef<boolean>(false);
+  useEffect(() => { recoverOnConnectRef.current = recoverOnConnect; }, [recoverOnConnect]);
 
   const telegramUrl = useMemo(() => "https://t.me/CryptidzTokenGateBot", []);
 
@@ -79,7 +81,12 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     }
     window.addEventListener("wallet-adapter-error", onWalletError as EventListener);
     function onWalletConnected(e: Event) { // eslint-disable-line @typescript-eslint/no-unused-vars
-      if (uiModeRef.current !== "verifying" && uiModeRef.current !== "success" && uiModeRef.current !== "rules") {
+      if (
+        uiModeRef.current !== "verifying" &&
+        uiModeRef.current !== "success" &&
+        uiModeRef.current !== "rules" &&
+        (uiModeRef.current !== "error" || recoverOnConnectRef.current)
+      ) {
         setConnectedFlow();
       }
     }
