@@ -1,4 +1,3 @@
-import { AlertCircle } from "lucide-react";
 import HomeContent from "../components/home/Home";
 import { validateSessionToken } from "@/libs/token-gate/sessionTokens";
 import InvalidAccessPage from "@/components/InvalidAccessPage";
