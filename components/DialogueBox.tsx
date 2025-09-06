@@ -98,7 +98,7 @@ export function DialogueBox({ segments, typingSpeedMs = 20, onAllSegmentsDone, c
   }, [canAdvance, skipOrAdvance]);
 
   return (
-    <div className={"relative" + (className ?? "")}>
+    <div className={"relative " + (className ?? "")}>
       {label ? (
         <div className="absolute -top-5 sm:-top-7 md:-top-8 left-3 md:-translate-x-1/3 z-20 px-3 py-2 rounded-sm bg-cryptidz-jet text-white text-xs sm:text-base md:text-lg font-dialogue font-regular select-none">
           {label}
