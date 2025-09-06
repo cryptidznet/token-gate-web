@@ -36,8 +36,6 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
   const [ctaOptions, setCtaOptions] = useState<CtaOption[]>([]);
   const [showCta, setShowCta] = useState(false);
   const [characterImage, setCharacterImage] = useState<string>("/img_drunk_monster_default.webp");
-  const [loading, setLoading] = useState(false);
-  const [lastError, setLastError] = useState<string | null>(null);
   const [recoverOnConnect, setRecoverOnConnect] = useState<boolean>(false);
   const [hasDisconnectedOnce, setHasDisconnectedOnce] = useState(false);
   const [inviteUrl, setInviteUrl] = useState<string | null>(null);
@@ -141,7 +139,6 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     setSegments(["Checkin' your wallet through me spyglass..."]);
     setCtaOptions([]);
     setShowCta(false);
-    setLoading(true);
 
     try {
       new PublicKey(publicKey.toBase58());
@@ -178,17 +175,13 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
         if (isServiceResponse<any>(raw)) {
           const mapped = mapVerifyError(raw as ServiceResponse<VerifyFailureObject>);
           setErrorFlow(mapped.messageSegments, mapped.ctas, { recoverOnConnect: false }, mapped.overrideCharacterImage);
-          setLastError(`${(raw as ServiceResponse<any>).statusCode}: ${(raw as ServiceResponse<any>).message}`);
         } else {
           const msg = typeof (raw as any)?.message === "string" ? (raw as any).message : "Verification failed.";
           setErrorFlow(["Arrr... Let's try that again, matey. Not to worry, me apologies for the inconvenience."], undefined, { recoverOnConnect: false });
-          setLastError(String(msg));
         }
       }
     } catch (err) {
       setErrorFlow(["Hmmmm... something ain't right. Let's try again, matey."], undefined, undefined, "/img_drunk_monster_verifying.webp");
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -295,14 +288,10 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
   }
 
   return {
-    uiMode,
     segments,
     ctaOptions,
     showCta,
     characterImage,
-    loading,
-    lastError,
-    publicKey,
     onSelectCta,
     onDialogueDone,
   } as const;

@@ -8,13 +8,10 @@ import { useTokenGateFlow } from "../../app/features/token-gate/useTokenGateFlow
 
 export default function HomeContent({ sessionToken }: { sessionToken: string | null }) {
   const {
-    uiMode,
     segments,
     ctaOptions,
     showCta,
     characterImage,
-    loading,
-    publicKey,
     onSelectCta,
     onDialogueDone,
   } = useTokenGateFlow(sessionToken ?? undefined);
