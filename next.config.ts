@@ -10,8 +10,26 @@ const originFromEnv = (url: string): string => {
   }
 };
 
+const websocketOriginFromHttpOrigin = (origin: string): string => {
+  try {
+    if (!origin) return '';
+    const url = new URL(origin);
+    if (url.protocol === 'http:') {
+      url.protocol = 'ws:';
+    } else if (url.protocol === 'https:') {
+      url.protocol = 'wss:';
+    } else {
+      return origin;
+    }
+    return url.origin;
+  } catch {
+    return '';
+  }
+};
+
 const apiOrigin = originFromEnv(env.NEXT_PUBLIC_API_BASE_URL);
 const solanaRpcOrigin = originFromEnv(env.NEXT_PUBLIC_SOLANA_RPC_URL);
+const solanaRpcWsOrigin = websocketOriginFromHttpOrigin(solanaRpcOrigin);
 
 const connectSrc = Array.from(
   new Set(
@@ -19,6 +37,7 @@ const connectSrc = Array.from(
       "'self'",
       apiOrigin,
       solanaRpcOrigin,
+      solanaRpcWsOrigin,
       isDev ? 'http://localhost:3002' : '',
       isDev ? 'ws://localhost:3002' : '',
     ].filter(Boolean)
