@@ -10,7 +10,6 @@ export async function GET(_req: NextRequest, { params }: { params: { sessionToke
     }
 
     const token = generateToken();
-    console.log("sessionToken", sessionToken);
     const res = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/token-gate/session-tokens/${sessionToken}`, {
       method: 'GET',
       headers: {
