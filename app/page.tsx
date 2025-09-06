@@ -12,8 +12,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
     return <InvalidAccessPage />;
   }
 
-  const validation = await validateSessionToken(sessionToken);
-  if (!validation.isValid) {
+  const isValid = await validateSessionToken(sessionToken);
+  if (!isValid) {
     return <InvalidAccessPage />;
   }
 
