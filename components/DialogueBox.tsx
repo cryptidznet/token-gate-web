@@ -110,7 +110,7 @@ export function DialogueBox({ segments, typingSpeedMs = 20, onAllSegmentsDone, c
         </div>
       ) : null}
       <div
-        className="h-30 md:h-40 rounded-md bg-cryptidz-white border-4 border-black/10 px-4 py-2 sm:py-3 text-black text-base sm:text-lg md:text-xl lg:text-[24px] relative z-10 font-dialogue"
+        className="h-30 md:h-40 rounded-md bg-cryptidz-white border-4 border-black/10 cursor-pointer px-4 py-2 sm:py-3 text-black text-base sm:text-lg md:text-xl lg:text-[24px] relative z-10 font-dialogue"
         onClick={skipOrAdvance}
         role="button"
         aria-label="Dialogue"
