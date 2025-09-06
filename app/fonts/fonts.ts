@@ -1,6 +1,4 @@
-import { Baloo_2 } from "next/font/google";
-import { Luckiest_Guy } from "next/font/google";
-import { Roboto_Condensed } from "next/font/google";
+import { Baloo_2, Luckiest_Guy, Roboto_Condensed } from "next/font/google";
 
 export const body = Baloo_2({
   subsets: ["latin"],
