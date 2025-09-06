@@ -165,6 +165,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .tg-crt::before {
+    animation: none;
+  }
+}
+
 @keyframes crt-scan {
   0% {
     background-position: 0 0;
