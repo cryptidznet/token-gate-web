@@ -1,6 +1,6 @@
 "use client";
 
-import { ConnectionProvider, WalletProvider, useWallet } from "@solana/wallet-adapter-react";
+import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
 import { useMemo } from "react";
