@@ -38,6 +38,8 @@ const connectSrc = Array.from(
       apiOrigin,
       solanaRpcOrigin,
       solanaRpcWsOrigin,
+      'https://*.phantom.app',
+      'wss://*.phantom.app',
       isDev ? 'http://localhost:3002' : '',
       isDev ? 'ws://localhost:3002' : '',
       isDev ? 'ws://localhost:3000' : '',
@@ -56,7 +58,7 @@ const cspHeader = `
   base-uri 'self';
   form-action 'self';
   frame-ancestors 'none';
-  frame-src 'self' https://connect.solflare.com;
+  frame-src 'self' https://connect.solflare.com https://phantom.app https://www.phantom.app https://wallet.phantom.app;
   connect-src ${connectSrc};
   upgrade-insecure-requests;
 `;
