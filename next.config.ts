@@ -56,6 +56,7 @@ const cspHeader = `
   base-uri 'self';
   form-action 'self';
   frame-ancestors 'none';
+  frame-src 'self' https://connect.solflare.com;
   connect-src ${connectSrc};
   upgrade-insecure-requests;
 `;

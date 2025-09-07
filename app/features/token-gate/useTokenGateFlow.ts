@@ -49,12 +49,12 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     // Only auto-recover from errors when explicitly allowed
     if (uiMode === "verifying" || uiMode === "success" || uiMode === "rules") return;
     if (uiMode === "error" && !recoverOnConnect) return;
-    if (connected) {
+    if (connected || publicKey) {
       setConnectedFlow();
     } else {
       setIdleFlow(hasDisconnectedOnce ? "disconnect" : "initial");
     }
-  }, [connected, hasDisconnectedOnce, uiMode, recoverOnConnect]);
+  }, [connected, publicKey, hasDisconnectedOnce, uiMode, recoverOnConnect]);
 
   useEffect(() => {
     function onWalletError(e: Event) {
@@ -85,7 +85,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
         uiModeRef.current !== "verifying" &&
         uiModeRef.current !== "success" &&
         uiModeRef.current !== "rules" &&
-        (uiModeRef.current !== "error" || recoverOnConnectRef.current)
+        uiModeRef.current !== "error"
       ) {
         setConnectedFlow();
       }
