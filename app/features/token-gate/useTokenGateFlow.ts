@@ -16,7 +16,6 @@ import {
   parseServiceResponseSuccess,
 } from "./types";
 import { env } from "@/env";
-import { buildVerificationPayload } from "./verifyPayload";
 import { ServiceResponse } from "@/common";
 
 export type UiMode = "idle" | "connected" | "verifying" | "rules" | "success" | "error";
@@ -149,13 +148,8 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     try {
       new PublicKey(publicKey.toBase58());
 
-      const { payload, messageBytes } = buildVerificationPayload({
-        domain: window.location.host,
-        uri: window.location.origin + window.location.pathname,
-        walletAddress: publicKey.toBase58(),
-        sessionToken,
-      });
-      const signature = await signMessage(messageBytes);
+      const message = new TextEncoder().encode(`Verify your Cryptidz ownership: ${sessionToken}`);
+      const signature = await signMessage(message);
 
       const response = await fetch(`/api/token-gate/verify`, {
         method: "POST",
@@ -164,8 +158,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
           walletAddress: publicKey.toBase58(),
           sessionToken,
           signature: Array.from(signature),
-          message: Array.from(messageBytes),
-          payload,
+          message: Array.from(message),
         }),
       });
 
