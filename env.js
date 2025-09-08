@@ -21,6 +21,7 @@ export const env = createEnv({
     NEXT_PUBLIC_API_BASE_URL: z.string().url(),
     NEXT_PUBLIC_GOLD_TIER_MIN_REQUIREMENT: z.coerce.number(),
     NEXT_PUBLIC_PURPLE_TIER_MIN_REQUIREMENT: z.coerce.number(),
+    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string(),
   },
 
   /**
@@ -34,6 +35,7 @@ export const env = createEnv({
     NEXT_PUBLIC_PURPLE_TIER_MIN_REQUIREMENT: process.env.NEXT_PUBLIC_PURPLE_TIER_MIN_REQUIREMENT,
     NEXT_PUBLIC_SOLANA_RPC_URL: process.env.NEXT_PUBLIC_SOLANA_RPC_URL,
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. 

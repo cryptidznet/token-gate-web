@@ -19,6 +19,7 @@
     "@solana/web3.js": "^1.98.4",
     "@t3-oss/env-nextjs": "^0.13.8",
     "@twa-dev/sdk": "^8.0.2",
+    "@walletconnect/solana-adapter": "^0.0.8",
     "bs58": "^6.0.0",
     "lucide-react": "^0.542.0",
     "next": "15.5.2",
