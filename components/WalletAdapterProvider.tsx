@@ -4,41 +4,28 @@ import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { PhantomWalletAdapter, SolflareWalletAdapter, WalletConnectWalletAdapter } from "@solana/wallet-adapter-wallets";
 import { useMemo } from "react";
-import { SolanaMobileWalletAdapter, createDefaultAddressSelector, createDefaultAuthorizationResultCache } from "@solana-mobile/wallet-adapter-mobile";
 import { clusterApiUrl } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { env } from "@/env";
 
 export function WalletAdapterProvider({ children }: { children: React.ReactNode }) {
-    const network = WalletAdapterNetwork.Mainnet
+    const network = WalletAdapterNetwork.Mainnet;
 
-    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+    const endpoint = useMemo(
+        () => env.NEXT_PUBLIC_SOLANA_RPC_URL || clusterApiUrl(network),
+        [network],
+    );
 
     const wallets = useMemo(
         () => [
             new WalletConnectWalletAdapter({
-                network: WalletAdapterNetwork.Mainnet,
+                network,
                 options: { projectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID },
             }),
             new PhantomWalletAdapter(),
-            new SolflareWalletAdapter(),
-            new SolanaMobileWalletAdapter({
-                appIdentity: {
-                    name: 'Cryptidz',
-                    uri: typeof window !== 'undefined' ? window.location.origin : 'https://cryptidz.app',
-                    icon: typeof window !== 'undefined' ? `${window.location.origin}/img_logo.png` : '',
-                },
-                addressSelector: createDefaultAddressSelector(),
-                authorizationResultCache: createDefaultAuthorizationResultCache(),
-                chain: 'solana:mainnet',
-                onWalletNotFound: async () => {
-                    if (typeof window !== 'undefined') {
-                        window.open('https://phantom.app', '_blank');
-                    }
-                },
-            }),
+            new SolflareWalletAdapter({ network }),
         ],
-        []
+        [network],
     );
 
     return (
