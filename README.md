@@ -56,6 +56,7 @@ This client won’t function without the private Cryptidz server. For transparen
   - `NODE_ENV`: `development | test | production`.
 - Client‑side (`NEXT_PUBLIC_*`):
   - `NEXT_PUBLIC_API_BASE_URL`: Base URL of the Cryptidz API.
+  - `NEXT_PUBLIC_CRYPTIDZ_CONTRACT_ADDRESS`: Cryptidz's official contract address
   - `NEXT_PUBLIC_SOLANA_RPC_URL`: Solana RPC endpoint.
   - `NEXT_PUBLIC_GOLD_TIER_MIN_REQUIREMENT`, `NEXT_PUBLIC_PURPLE_TIER_MIN_REQUIREMENT`: Tier thresholds used in UI copy.
   - `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`: For WalletConnect adapter.

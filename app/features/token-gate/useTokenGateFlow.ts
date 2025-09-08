@@ -282,6 +282,14 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
       window.location.href = "https://t.me/CryptidzCaptchaBot";
       return;
     }
+    if (id === "buy-cryptidz") {
+      window.open(
+        `https://jup.ag/swap?sell=So11111111111111111111111111111111111111112&buy=${env.NEXT_PUBLIC_CRYPTIDZ_CONTRACT_ADDRESS}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+      return;
+    }
   }
 
   function onDialogueDone() {

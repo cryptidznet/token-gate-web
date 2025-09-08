@@ -59,7 +59,7 @@ export function mapVerifyError(
           { text: "This means the wallet is already linked to a different Telegram account. For security, each wallet can only be linked once.", italic: true },
           { text: "If you need to change which Telegram account this wallet is linked to, please contact the admins for assistance.", italic: true }
         ],
-        ctas: [{ id: "contact_support", label: "Contact Support" }],
+        ctas: [{ id: "disconnect", label: "Disconnect" }, { id: "contact_support", label: "Contact Support" }],
         overrideCharacterImage: "/img_drunk_monster_verifying.webp",
       };
     case "INSUFFICIENT_BALANCE": {
@@ -82,8 +82,10 @@ export function mapVerifyError(
       return {
         messageSegments: segments,
         ctas: [
+          { id: "buy-cryptidz", label: "Buy $CRYPTIDZ" },
+          { id: "verify", label: "Try Again" },
           { id: "disconnect", label: "Disconnect" },
-          { id: "back", label: "Back to Telegram" },
+          { id: "contact_support", label: "Contact Support" },
         ],
         overrideCharacterImage: "/img_drunk_monster_frowning.webp",
       };
