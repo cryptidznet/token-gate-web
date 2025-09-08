@@ -30,6 +30,7 @@ const websocketOriginFromHttpOrigin = (origin: string): string => {
 const apiOrigin = originFromEnv(env.NEXT_PUBLIC_API_BASE_URL);
 const solanaRpcOrigin = originFromEnv(env.NEXT_PUBLIC_SOLANA_RPC_URL);
 const solanaRpcWsOrigin = websocketOriginFromHttpOrigin(solanaRpcOrigin);
+const assetsOrigin = originFromEnv(env.NEXT_PUBLIC_ASSETS_BASE_URL);
 
 const connectSrc = Array.from(
   new Set(
@@ -96,6 +97,7 @@ const imgSrc = Array.from(
       'https://tokens.1inch.io',
       'https://ipfs.io',
       'https://cdn.zerion.io',
+      assetsOrigin,
     ].filter(Boolean)
   )
 ).join(' ');
@@ -140,13 +142,11 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'assets.cryptidz.xyz',
-        port: '',
         pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'cryptidznet.mypinata.cloud',
-        port: '',
         pathname: '/ipfs/**',
       },
     ],
