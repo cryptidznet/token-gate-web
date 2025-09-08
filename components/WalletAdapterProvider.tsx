@@ -49,8 +49,8 @@ export function WalletAdapterProvider({ children }: { children: React.ReactNode 
                     addressSelector: createDefaultAddressSelector(),
                     chain: 'solana:mainnet',
                     onWalletNotFound: async () => {
-                        if (typeof window !== 'undefined') {
-                            window.open('https://phantom.app', '_blank');
+                        if (typeof window !== "undefined") {
+                            window.open("https://phantom.app", "_blank", "noopener,noreferrer");
                         }
                     },
                 }),
