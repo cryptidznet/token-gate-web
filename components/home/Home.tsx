@@ -4,6 +4,7 @@ import Image from "next/image";
 import { DialogueBox } from "@/components/DialogueBox";
 import { CtaBox } from "@/components/CtaBox";
 import { useTokenGateFlow } from "../../app/features/token-gate/useTokenGateFlow";
+import { IMAGES } from "@/app/assets/images";
 
 export default function HomeContent({ sessionToken }: { sessionToken: string | null }) {
   const {
@@ -19,7 +20,7 @@ export default function HomeContent({ sessionToken }: { sessionToken: string | n
     <div className="min-h-screen w-full flex items-stretch justify-center bg-black">
       <div className="relative w-full flex-1 overflow-x-hidden">
         <Image
-          src="/img_horn_pub.jpg"
+          src={IMAGES.HORN_PUB}
           alt=""
           aria-hidden
           fill
@@ -27,7 +28,7 @@ export default function HomeContent({ sessionToken }: { sessionToken: string | n
           className="hidden md:block object-cover object-center blur-[2px]"
         />
         <Image
-          src="/img_horn_pub_portrait.jpg"
+          src={IMAGES.HORN_PUB_PORTRAIT}
           alt=""
           aria-hidden
           fill

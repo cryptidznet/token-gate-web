@@ -17,6 +17,7 @@ import {
 } from "./types";
 import { env } from "@/env";
 import { ServiceResponse } from "@/common";
+import { IMAGES } from "@/app/assets/images";
 
 export type UiMode = "idle" | "connected" | "verifying" | "rules" | "success" | "error";
 
@@ -33,7 +34,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
   const [segments, setSegments] = useState<DialogueSegment[]>([]);
   const [ctaOptions, setCtaOptions] = useState<CtaOption[]>([]);
   const [showCta, setShowCta] = useState(false);
-  const [characterImage, setCharacterImage] = useState<string>("/img_drunk_monster_default.webp");
+  const [characterImage, setCharacterImage] = useState<string>(IMAGES.DRUNK_MONSTER_DEFAULT);
   const [recoverOnConnect, setRecoverOnConnect] = useState<boolean>(false);
   const [hasDisconnectedOnce, setHasDisconnectedOnce] = useState(false);
   const [inviteUrl, setInviteUrl] = useState<string | null>(null);
@@ -58,9 +59,9 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
   function setIdleFlow(mode: "initial" | "disconnect" = "initial") {
     setUiMode("idle");
     if (mode === "initial") {
-      setCharacterImage("/img_drunk_monster_welcome.webp");
+      setCharacterImage(IMAGES.DRUNK_MONSTER_WELCOME);
     } else {
-      setCharacterImage("/img_drunk_monster_default.webp");
+      setCharacterImage(IMAGES.DRUNK_MONSTER_DEFAULT);
     }
     if (mode === "initial") {
       setSegments([
@@ -81,7 +82,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
 
   function setConnectedFlow() {
     setUiMode("connected");
-    setCharacterImage("/img_drunk_monster_default.webp");
+    setCharacterImage(IMAGES.DRUNK_MONSTER_WELCOME);
     setSegments([
       "Ahhh... I can see yer wallet clear as day!",
       "Time to see what $CRYPTIDZ treasures ye be holdin. Ready to prove yer worth, matey?"
@@ -99,7 +100,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
       return;
     }
     setUiMode("verifying");
-    setCharacterImage("/img_drunk_monster_verifying.webp");
+    setCharacterImage(IMAGES.DRUNK_MONSTER_VERIFYING);
     setSegments(["Checkin' your wallet through me spyglass..."]);
     setCtaOptions([]);
     setShowCta(false);
@@ -137,13 +138,13 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
         }
       }
     } catch (err) { // eslint-disable-line @typescript-eslint/no-unused-vars
-      setErrorFlow(["Hmmmm... something ain't right. Let's try again, matey."], undefined, undefined, "/img_drunk_monster_verifying.webp");
+      setErrorFlow(["Hmmmm... something ain't right. Let's try again, matey."], undefined, undefined, IMAGES.DRUNK_MONSTER_VERIFYING);
     }
   }
 
   function setRulesFlow() {
     setUiMode("rules");
-    setCharacterImage("/img_drunk_monster_default.webp");
+    setCharacterImage(IMAGES.DRUNK_MONSTER_DEFAULT);
     setSegments([
       "Alright, matey - just a couple quick reminders before we celebrate...",
       "First things first - always keep yer Cryptidz balance topped up or ye'll be broke and locked out of all the good spots.",
@@ -159,7 +160,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
 
   function setSuccessFlow() {
     setUiMode("success");
-    setCharacterImage("/img_drunk_monster_celebrating.webp");
+    setCharacterImage(IMAGES.DRUNK_MONSTER_CELEBRATING);
     if (inviteUrl) {
       setSegments([
         "🍺 WELCOME ABOARD, YE FINE SEA DOG! All of The Swamp awaits yer adventures!",
@@ -181,10 +182,10 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     reason: DialogueSegment[],
     overrideCtas?: CtaOption[],
     opts?: { recoverOnConnect?: boolean },
-    overrideCharacterImage: string = "/img_drunk_monster_default.webp",
+    overrideCharacterImage: string = IMAGES.DRUNK_MONSTER_DEFAULT,
   ) {
     setUiMode("error");
-    setCharacterImage(overrideCharacterImage ?? "/img_drunk_monster_default.webp");
+    setCharacterImage(overrideCharacterImage ?? IMAGES.DRUNK_MONSTER_DEFAULT);
     setSegments(Array.isArray(reason) ? reason : [reason]);
     setCtaOptions(
       overrideCtas ?? [

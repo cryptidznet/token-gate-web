@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import PrimaryButton from "./PrimaryButton";
+import { IMAGES } from "@/app/assets/images";
 
 export default function InvalidAccessPage() {
   return (
@@ -9,7 +10,7 @@ export default function InvalidAccessPage() {
       <div className="text-center">
         <div className="flex justify-center">
           <Image
-            src="/img_drunk_monster_verifying.webp"
+            src={IMAGES.DRUNK_MONSTER_VERIFYING}
             alt="Drunk Monster With Magnifying Glass"
             width={500}
             height={500}
