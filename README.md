@@ -5,7 +5,7 @@ Welcome! This repository contains the public web client used to verify $CRYPTIDZ
 ### What’s inside at a glance
 - **Next.js (App Router)**: Server and client components with route handlers.
 - **TypeScript + Zod**: Strict types and runtime validation for responses.
-- **Wallet adapters**: Phantom, Solflare, WalletConnect, and Solana Mobile Wallet Adapter.
+- **Wallet adapters**: Phantom, Solflare, and WalletConnect.
 - **Token‑gate flow**: Client hook that drives the UI state machine for connect → sign → verify → success.
 - **API proxy**: Route handler forwards signed requests to the private Cryptidz API.
 - **Security headers**: Tight Content‑Security‑Policy and robots directives.
