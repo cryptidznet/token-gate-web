@@ -11,18 +11,26 @@ import { env } from "@/env";
 export function WalletAdapterProvider({ children }: { children: React.ReactNode }) {
     const network = WalletAdapterNetwork.Mainnet;
 
-    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+    const endpoint = useMemo(
+        () => env.NEXT_PUBLIC_SOLANA_RPC_URL || clusterApiUrl(network),
+        [network],
+    );
+
+    const wallets = useMemo(
+        () => [
+            new WalletConnectWalletAdapter({
+                network,
+                options: { projectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID },
+            }),
+            new PhantomWalletAdapter(),
+            new SolflareWalletAdapter({ network }),
+        ],
+        [network],
+    );
 
     return (
         <ConnectionProvider endpoint={endpoint}>
-            <WalletProvider wallets={[
-                new WalletConnectWalletAdapter({
-                    network: WalletAdapterNetwork.Mainnet,
-                    options: { projectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID },
-                }),
-                new PhantomWalletAdapter(),
-                new SolflareWalletAdapter(),
-            ]} autoConnect>
+            <WalletProvider wallets={wallets} autoConnect>
                 <WalletModalProvider>{children}</WalletModalProvider>
             </WalletProvider>
         </ConnectionProvider>
