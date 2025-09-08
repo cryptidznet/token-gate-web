@@ -88,6 +88,7 @@ const imgSrc = Array.from(
       "'self'",
       'blob:',
       'data:',
+      'https://walletconnect.org',
       'https://walletconnect.com',
       'https://secure.walletconnect.com',
       'https://secure.walletconnect.org',
