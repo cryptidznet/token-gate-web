@@ -1,6 +1,7 @@
 import { CtaOption } from "@/components/CtaBox";
 import { VerifyFailureObject } from "./types";
 import { ServiceResponse } from "@/common";
+import { IMAGES } from "@/app/assets/images";
 
 type MessageSegment = string | { text: string; italic?: boolean };
 
@@ -29,7 +30,7 @@ export function mapVerifyError(
           { text: "For security, your session has expired. Please return to Telegram and type /verify to get a fresh verification link.", italic: true }
         ],
         ctas: [{ id: "back", label: "Back to Telegram" }],
-        overrideCharacterImage: "/img_drunk_monster_verifying.webp",
+        overrideCharacterImage: IMAGES.DRUNK_MONSTER_VERIFYING,
       };
     case "INVALID_SIGNATURE":
       return {
@@ -50,7 +51,7 @@ export function mapVerifyError(
           { text: "If you think this is an error, please contact support instead.", italic: true }
         ],
         ctas: [{ id: "captcha", label: "Complete Captcha" }, { id: "contact_support", label: "Contact Support" }],
-        overrideCharacterImage: "/img_drunk_monster_verifying.webp",
+        overrideCharacterImage: IMAGES.DRUNK_MONSTER_VERIFYING,
       };
     case "WALLET_ALREADY_LINKED":
       return {
@@ -60,7 +61,7 @@ export function mapVerifyError(
           { text: "If you need to change which Telegram account this wallet is linked to, please contact the admins for assistance.", italic: true }
         ],
         ctas: [{ id: "disconnect", label: "Disconnect" }, { id: "contact_support", label: "Contact Support" }],
-        overrideCharacterImage: "/img_drunk_monster_verifying.webp",
+        overrideCharacterImage: IMAGES.DRUNK_MONSTER_VERIFYING,
       };
     case "INSUFFICIENT_BALANCE": {
       const current = responseObject?.currentBalance;
@@ -87,7 +88,7 @@ export function mapVerifyError(
           { id: "disconnect", label: "Disconnect" },
           { id: "contact_support", label: "Contact Support" },
         ],
-        overrideCharacterImage: "/img_drunk_monster_frowning.webp",
+        overrideCharacterImage: IMAGES.DRUNK_MONSTER_FROWNING,
       };
     }
     default: {
@@ -99,7 +100,7 @@ export function mapVerifyError(
         return {
           messageSegments: ["Well this is embarrassing, but me spyglass just snapped. Come back later when I'm back in action, matey. Me apologies for the inconvenience."],
           ctas: [{ id: "back", label: "Back to Telegram" }, { id: "contact_support", label: "Contact Support" }],
-          overrideCharacterImage: "/img_drunk_monster_frowning.webp",
+          overrideCharacterImage: IMAGES.DRUNK_MONSTER_FROWNING,
         }
       }
       return statusBundle("Something unexpected happened. Wanna try again, matey? Me apologies for the inconvenience.");

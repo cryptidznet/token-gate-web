@@ -1,12 +1,13 @@
 "use client";
 
+import { IMAGES } from "@/app/assets/images";
 import Image from "next/image";
 
 export function HeaderControls() {
   return (
     <>
-      <div className="fixed top-4 left-4 z-50">
-        <Image src="/img_logo.png" alt="Cryptidz logo" width={160} height={48} className="h-8 w-auto" priority />
+      <div className="fixed top-4 left-4 z-50 rounded-md overflow-hidden">
+        <Image src={IMAGES.LOGO} alt="Cryptidz logo" width={160} height={48} className="h-8 w-auto" priority />
       </div>
       <a
         href="https://github.com/cryptidznet/token-gate-web"
