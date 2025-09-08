@@ -56,7 +56,7 @@ export function mapVerifyError(
       return {
         messageSegments: [
           "Hold on there, matey... I may have had a drink or two, but I never forget a wallet I've checked. This one belongs to another sailor, if me memory serves me right.",
-          { text: "This wallet is already linked to a different Telegram account. For security, each wallet can only be linked once.", italic: true },
+          { text: "This means the wallet is already linked to a different Telegram account. For security, each wallet can only be linked once.", italic: true },
           { text: "If you need to change which Telegram account this wallet is linked to, please contact the admins for assistance.", italic: true }
         ],
         ctas: [{ id: "contact_support", label: "Contact Support" }],
