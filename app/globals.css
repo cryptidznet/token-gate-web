@@ -3,12 +3,90 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --amethyst: #ab61ff;
+  --blue: #4da8ff;
+  --orange: #feb340;
+  --black: #0a0a0a;
+  --byzantine-blue: #3b4fdb;
+  --dark-purple: #31263e;
+  --dim-gray: #666666;
+  --egyptian-blue: #383b99;
+  --federal-blue: #2C125F;
+  --flame: #d25a29;
+  --floral-lavender: #c17fff;
+  --iris: #4248d6;
+  --lavender: #a37bdb;
+  --gray: #d0d6dc;
+  --green: #6ac46d;
+  --jet: #2c2c2c;
+  --majorelle-blue: #7b4ffd;
+  --medium-slate-blue: #8576ec;
+  --old-gold: #dfc246;
+  --palatinate-blue: #5039db;
+  --pale-azure: #73ddff;
+  --persian-blue: #4f3bb4;
+  --persian-indigo: #2f2287;
+  --pink: #e0a6bc;
+  --red: #e16252;
+  --risd-blue: #4c5aff;
+  --russian-violet: #45155e;
+  --sky-blue: #1ac8ed;
+  --soft-lavender: #b29bff;
+  --tropical-indigo: #9b7eff;
+  --vivid-sky-blue: #4bd5fd;
+  --white: #f5f5f5;
+  --yellow: #ffdd4a;
+  --yinmn-blue: #354f97;
 }
 
 @theme inline {
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1440px;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-cryptidz-amethyst: var(--amethyst);
+  --color-cryptidz-orange: var(--orange);
+  --color-cryptidz-black: var(--black);
+  --color-cryptidz-blue: var(--blue);
+  --color-cryptidz-byzantine-blue: var(--byzantine-blue);
+  --color-cryptidz-dark-purple: var(--dark-purple);
+  --color-cryptidz-dim-gray: var(--dim-gray);
+  --color-cryptidz-egyptian-blue: var(--egyptian-blue);
+  --color-cryptidz-federal-blue: var(--federal-blue);
+  --color-cryptidz-flame: var(--flame);
+  --color-cryptidz-floral-lavender: var(--floral-lavender);
+  --color-cryptidz-iris: var(--iris);
+  --color-cryptidz-lavender: var(--lavender);
+  --color-cryptidz-gray: var(--gray);
+  --color-cryptidz-green: var(--green);
+  --color-cryptidz-jet: var(--jet);
+  --color-cryptidz-majorelle-blue: var(--majorelle-blue);
+  --color-cryptidz-medium-slate-blue: var(--medium-slate-blue);
+  --color-cryptidz-old-gold: var(--old-gold);
+  --color-cryptidz-palatinate-blue: var(--palatinate-blue);
+  --color-cryptidz-pale-azure: var(--pale-azure);
+  --color-cryptidz-persian-blue: var(--persian-blue);
+  --color-cryptidz-persian-indigo: var(--persian-indigo);
+  --color-cryptidz-pink: var(--pink);
+  --color-cryptidz-red: var(--red);
+  --color-cryptidz-risd-blue: var(--risd-blue);
+  --color-cryptidz-russian-violet: var(--russian-violet);
+  --color-cryptidz-sky-blue: var(--sky-blue);
+  --color-cryptidz-soft-lavender: var(--soft-lavender);
+  --color-cryptidz-tropical-indigo: var(--tropical-indigo);
+  --color-cryptidz-vivid-sky-blue: var(--vivid-sky-blue);
+  --color-cryptidz-white: var(--white);
+  --color-cryptidz-yellow: var(--yellow);
+  --color-cryptidz-yinmn-blue: var(--yinmn-blue);
+
   --font-sans: var(--font-geist-sans);
+  --font-body: var(--font-body);
+  --font-heading: var(--font-heading);
+  --font-dialogue: var(--font-dialogue);
+  --font-interface: var(--font-interface);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -19,8 +97,86 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes nudge-right {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+/* Retro CRT overlay for scene */
+.tg-crt {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.tg-crt::before {
+  /* scanlines */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.06) 0px,
+      rgba(255, 255, 255, 0.06) 1px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 3px);
+  background-size: 100% 4px;
+  animation: crt-scan 8s linear infinite;
+  opacity: 0.25;
+}
+
+.tg-crt::after {
+  /* vignette */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.28) 100%);
+}
+
+/* Text Stroke Utilities */
+.text-stroke-responsive {
+  -webkit-text-stroke: var(--webkit-text-stroke, 1px) white;
+}
+
+.text-stroke-white {
+  text-shadow: 1px 0 0 white, -1px 0 0 white, 0 1px 0 white, 0 -1px 0 white,
+    1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;
+}
+
+@media (min-width: 768px) {
+  .text-stroke-white {
+    text-shadow: 2px 0 0 white, -2px 0 0 white, 0 2px 0 white, 0 -2px 0 white,
+      2px 2px 0 white, -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white;
+  }
+}
+
+@media (min-width: 1024px) {
+  .text-stroke-white {
+    text-shadow: 3px 0 0 white, -3px 0 0 white, 0 3px 0 white, 0 -3px 0 white,
+      3px 3px 0 white, -3px -3px 0 white, 3px -3px 0 white, -3px 3px 0 white;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tg-crt::before {
+    animation: none;
+  }
+}
+
+@keyframes crt-scan {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 4px;
+  }
 }
