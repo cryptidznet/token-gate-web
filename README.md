@@ -37,7 +37,7 @@ Welcome! This repository contains the public web client used to verify $CRYPTIDZ
 - `app/features/token-gate/types.ts`
   - Zod schemas and helpers for parsing success/failure `ServiceResponse` shapes from the API.
 - `components/WalletAdapterProvider.tsx`
-  - Sets up Solana wallet adapters (WalletConnect, Phantom, Solflare, Solana Mobile) and modal UI.
+  - Sets up Solana wallet adapters (WalletConnect, Phantom, Solflare) and modal UI.
 - `components/InvalidAccessPage.tsx`
   - Shown when `session-token` is absent/invalid; guides the user back to the Telegram bot.
 - `app/layout.tsx`
