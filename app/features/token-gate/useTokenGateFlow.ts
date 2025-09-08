@@ -55,47 +55,6 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     }
   }, [connected, publicKey, hasDisconnectedOnce, uiMode, recoverOnConnect]);
 
-  useEffect(() => {
-    function onWalletError(e: Event) {
-      const anyEvt = e as CustomEvent<{ name?: string; message?: string }>;
-      const errorName = (anyEvt?.detail?.name || "").toString();
-
-      let copy = "Hmmm... that doesn't look right. Wanna try again, matey?";
-      const ctas = [
-        { id: "connect", label: "Connect Wallet" },
-        { id: "back", label: "Back to Telegram" },
-      ];
-
-      switch (errorName) {
-        case "WalletConnectionError":
-        case "WalletWindowClosedError":
-        case "WalletWindowBlockedError":
-          copy = "Ready when ye are, matey.";
-          break;
-        default:
-          break;
-      }
-
-      setErrorFlow([copy], ctas, { recoverOnConnect: false });
-    }
-    window.addEventListener("wallet-adapter-error", onWalletError as EventListener);
-    function onWalletConnected(e: Event) { // eslint-disable-line @typescript-eslint/no-unused-vars
-      if (
-        uiModeRef.current !== "verifying" &&
-        uiModeRef.current !== "success" &&
-        uiModeRef.current !== "rules" &&
-        uiModeRef.current !== "error"
-      ) {
-        setConnectedFlow();
-      }
-    }
-    window.addEventListener("wallet-adapter-connected", onWalletConnected as EventListener);
-    return () => {
-      window.removeEventListener("wallet-adapter-error", onWalletError as EventListener);
-      window.removeEventListener("wallet-adapter-connected", onWalletConnected as EventListener);
-    };
-  }, []);
-
   function setIdleFlow(mode: "initial" | "disconnect" = "initial") {
     setUiMode("idle");
     if (mode === "initial") {
