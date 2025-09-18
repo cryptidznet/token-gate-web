@@ -66,7 +66,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     if (mode === "initial") {
       setSegments([
         "Ahoy there, matey! Let's get ye verified, shall we?",
-        "The process is simple - just show me yer wallet and I'll take care of the rest.",
+        "All ye need to do is show me yer coin purse and I'll do the rest with me magical spyglass!",
         "Quick verification and you'll be on yer way to exploring the Swamp!",
         "Ready when ye are, matey...",
       ]);
