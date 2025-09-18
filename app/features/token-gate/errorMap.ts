@@ -2,6 +2,8 @@ import { CtaOption } from "@/components/CtaBox";
 import { VerifyFailureObject } from "./types";
 import { ServiceResponse } from "@/common";
 import { IMAGES } from "@/app/assets/images";
+import { formatNumber } from "@/app/utils/number";
+import { env } from "@/env";
 
 type MessageSegment = string | { text: string; italic?: boolean };
 
@@ -65,14 +67,12 @@ export function mapVerifyError(
       };
     case "INSUFFICIENT_BALANCE": {
       const current = responseObject?.currentBalance;
-      const needPurple = responseObject?.requiredBalancePurple;
-      const needGold = responseObject?.requiredBalanceGold;
 
       const segments: MessageSegment[] = ["Hate to break it to ye, matey, but yer $CRYPTIDZ balance is too low."];
 
-      if (typeof current !== "undefined" && typeof needPurple !== "undefined") {
+      if (typeof current !== "undefined") {
         segments.push({
-          text: `You currently have ${current} $CRYPTIDZ. You need at least ${needPurple} for Purple tier${typeof needGold !== "undefined" ? ` or ${needGold} for Gold tier` : ""}.`,
+          text: `You currently have ${formatNumber(current)} $CRYPTIDZ. You need at least ${formatNumber(env.NEXT_PUBLIC_PURPLE_TIER_MIN_REQUIREMENT)} for Purple tier or ${formatNumber(env.NEXT_PUBLIC_GOLD_TIER_MIN_REQUIREMENT)} for Gold tier.`,
           italic: true,
         });
         segments.push("Make sure to top up yer balance. I'll be waiting right here when ye are ready, matey.");
