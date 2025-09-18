@@ -18,6 +18,7 @@ import {
 import { env } from "@/env";
 import { ServiceResponse } from "@/common";
 import { IMAGES } from "@/app/assets/images";
+import { formatNumber } from "@/app/utils/number";
 
 export type UiMode = "idle" | "connected" | "verifying" | "rules" | "success" | "error";
 
@@ -148,7 +149,7 @@ export function useTokenGateFlow(passedSessionToken?: string | null) {
     setSegments([
       "Alright, matey - just a couple quick reminders before we celebrate...",
       "First things first - always keep yer Cryptidz balance topped up or ye'll be broke and locked out of all the good spots.",
-      { text: `This means keeping your balance above ${env.NEXT_PUBLIC_PURPLE_TIER_MIN_REQUIREMENT} $CRYPTIDZ if you are in the Purple tier, and above ${env.NEXT_PUBLIC_GOLD_TIER_MIN_REQUIREMENT} $CRYPTIDZ if you are in the Gold tier.`, italic: true },
+      { text: `This means keeping your balance above ${formatNumber(env.NEXT_PUBLIC_PURPLE_TIER_MIN_REQUIREMENT)} $CRYPTIDZ if you are in the Purple tier, and above ${formatNumber(env.NEXT_PUBLIC_GOLD_TIER_MIN_REQUIREMENT)} $CRYPTIDZ if you are in the Gold tier.`, italic: true },
       "And another thing...",
       "Make sure to follow the rules of The Swamp, savvy?",
     ]);
