@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { IMAGES } from "./assets/images";
 
 export default function Loading() {
   return (
@@ -6,7 +7,7 @@ export default function Loading() {
       <div className="text-center">
         <div className="flex justify-center">
           <Image
-            src="/img_drunk_monster_sleeping.webp"
+            src={IMAGES.DRUNK_MONSTER_SLEEPING}
             alt="Drunk Monster Sleeping"
             width={400}
             height={400}

@@ -99,7 +99,7 @@ export function mapVerifyError(
       } else if (statusCode === 404 || statusCode >= 500) {
         return {
           messageSegments: ["Well this is embarrassing, but me spyglass just snapped. Come back later when I'm back in action, matey. Me apologies for the inconvenience."],
-          ctas: [{ id: "back", label: "Back to Telegram" }, { id: "contact_support", label: "Contact Support" }],
+          ctas: [{ id: "verify", label: "Try Again" }, { id: "back", label: "Back to Telegram" }, { id: "contact_support", label: "Contact Support" }],
           overrideCharacterImage: IMAGES.DRUNK_MONSTER_FROWNING,
         }
       }
